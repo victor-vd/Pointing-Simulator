@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    [SerializeField] private CharacterController controller;
 
-    public float speed = 10f;
-    public float gravity = -9.81f * 2;
-    public float sprintFactor = 2f;
-    public float jumpHeight = 3f;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float gravity = -9.81f * 2;
+    [SerializeField] private float sprintSpeed = 2f;
+    [SerializeField] private float jumpHeight = 3f;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask;
 
     Vector3 velocity;
 
+    private float sprintFactor = 1f;
     bool isGrounded;
     private bool isWalking;
 
@@ -43,13 +44,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            controller.Move(move * speed * sprintFactor * Time.deltaTime);
-
+            sprintFactor = sprintSpeed;
         }
         else
         {
-            controller.Move(move * speed * Time.deltaTime);
+            sprintFactor = 1;
         }
+
+        controller.Move(move * speed * sprintFactor * Time.deltaTime);
 
         //Debug.Log(isGrounded);
         //check if the player is on the ground so he can jump
@@ -67,5 +69,10 @@ public class PlayerMovement : MonoBehaviour
     public bool IsWalking()
     {
         return isWalking;
+    }
+
+    public float SprintFactor()
+    {
+        return sprintFactor;
     }
 }

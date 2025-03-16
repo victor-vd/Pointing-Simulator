@@ -9,6 +9,8 @@ public class PlayerAnimator : MonoBehaviour
 
     [SerializeField] private PlayerMovement playerMovement;
 
+    private float walkingSpeed;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -16,6 +18,14 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
+        float walkingSpeed = playerMovement.SprintFactor();
+
+        if (walkingSpeed > 1)
+        {
+            walkingSpeed -= 0.5f;
+        }
+
         animator.SetBool("isWalking", playerMovement.IsWalking());
+        animator.SetFloat("sprintFactor", walkingSpeed);
     }
 }
