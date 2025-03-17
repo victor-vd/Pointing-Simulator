@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class ToggleCam : MonoBehaviour
 {
-    [SerializeField] private Camera FirstPersonCamera;
-    [SerializeField] private Camera ThirdPersonCamera;
+    [SerializeField] private CinemachineVirtualCamera FirstPersonCamera;
+    [SerializeField] private CinemachineVirtualCamera ThirdPersonCamera;
 
     private void Update()
     {

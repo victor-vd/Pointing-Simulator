@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class MouseMovementX : MonoBehaviour
 {
-    [SerializeField] private ToggleCam toggleCam;
 
-    [SerializeField] private float mouseSensitivity = MouseMovementY.mouseSensitivity;
-
-    private float xRotation = 0f;
-
-    private float minRotation;
-    private float maxRotation;
+    [SerializeField] private float mouseSensitivity = 800f;
+    private float sensitivity;
+    private float YRotation = 0f;
 
     void Start()
     {
@@ -21,37 +17,20 @@ public class MouseMovementX : MonoBehaviour
 
     void Update()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        sensitivity = mouseSensitivity / 2;
 
-        Debug.Log(mouseY);
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
-        //control rotation around x axis (Look up and down)
-        xRotation -= mouseY;
+        //control rotation around y axis (Look up and down)
+        YRotation += mouseX;
 
-        //we clamp the rotation so we cant Over-rotate (like in real life)
-        ToggleCam toggleCam = FindObjectOfType<ToggleCam>();
+        //applying y rotation
+        transform.localRotation = Quaternion.Euler(0f, YRotation, 0f);
 
+    }
 
-        if (toggleCam.FirstPersonState())
-        {
-            minRotation = -80f;
-            maxRotation = 80f;
-        }
-        else if (toggleCam.ThirdPersonState())
-        {
-            minRotation = -30f;
-            maxRotation = 30f;
-        }
-        else
-        {
-            minRotation = -90f;
-            maxRotation = 90f;
-        }
-
-        xRotation = Mathf.Clamp(xRotation, minRotation, maxRotation);
-
-        //applying x rotation
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
+    public float MouseSensitivity()
+    {
+        return mouseSensitivity / 2;
     }
 }
