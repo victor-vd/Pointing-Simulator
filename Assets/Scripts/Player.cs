@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{   
-    [HideInInspector]
-    public static bool playerInteract;
+{
+    private bool playerInteract;
+
+    private bool isPointing;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInteract = false;
+
+        isPointing = false;
     }
 
     // Update is called once per frame
@@ -19,9 +24,19 @@ public class Player : MonoBehaviour
         {
             playerInteract = true;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            isPointing = true;
+        }
         else
         {
-            playerInteract = false;
+            isPointing = false;
         }
+    }
+
+    public bool IsPointing()
+    {
+        return isPointing;
     }
 }
